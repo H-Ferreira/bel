@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delícias Da Bel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(172, 153, 116);
+            color: #333;
+        }
+        header {
+            background-color: rgb(9, 48, 74);
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; /* Adiciona wrap para responsividade */
+        }
+        header img {
+            height: 70px;
+            margin-right: -150px; /* Ajuste de margem para dispositivos móveis */
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+            flex: 1;
+            font-size: 1.5em; /* Ajusta o tamanho da fonte do título */
+        }
+        main {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="number"], select {
+            width: calc(100% - 22px); /* Ajusta a largura para considerar o padding e border */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: rgb(9, 48, 74);
+            color: white;
+        }
+        td {
+            background-color: #fafafa;
+        }
+        button.toggle {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+        }
+        button.toggle.sim {
+            background-color: #4CAF50;
+        }
+        button.toggle.nao {
+            background-color: #f44336;
+        }
+        button.excluir {
+            background-color: #f44336;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button.excluir:hover {
+            background-color: #d32f2f;
+        }
+        .tabela th, .tabela td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            header h1 {
+                text-align: center;
+                font-size: 1.2em;
+            }
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 10px;
+            }
+            form {
+                padding: 15px;
+            }
+            input[type="submit"] {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: rgb(9, 48, 74);
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://seeklogo.com/images/H/horto-bela-vista-logo-A0EDD6704C-seeklogo.com.png" alt="Logo">
+        <h1>Controle de Pedidos - Delícias da Bel</h1>
+    </header>
+    <main>
+        <form id="pedidoForm">
+            <label for="bloco">Bloco:</label>
+            <select id="bloco" name="bloco" required>
+                <option value="Hibisco">Hibisco</option>
+                <option value="Eugênia">Eugênia</option>
+                <option value="Vitória Régia">Vitória Régia</option>
+                <option value="Bromélia">Bromélia</option>
+            </select>
+
+            <label for="apt">Apartamento:</label>
+            <input type="number" id="apt" name="apt" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" required>
+
+            <label for="observacoes">Observações:</label>
+            <input type="text" id="observacoes" name="observacoes">
+
+            <input type="submit" value="Adicionar Pedido">
+        </form>
+
+        <table id="tabelaPedidos" class="tabela">
+            <thead>
+                <tr>
+                    <th class="bloco">Bloco</th>
+                    <th class="apt">Apartamento</th>
+                    <th class="qnt">Quantidade</th>
+                    <th class="observacoes">Observações</th>
+                    <th class="pago">Pago</th>
+                    <th class="entregue">Entregue</th>
+                    <th class="acao">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os pedidos serão adicionados aqui -->
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        &copy; 2024 OnBlack - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarPedidos);
+    
+        document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const bloco = document.getElementById('bloco').value;
+            const apt = document.getElementById('apt').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const observacoes = document.getElementById('observacoes').value;
+    
+            const pedido = {
+                bloco,
+                apt,
+                quantidade,
+                pago: 'Não',
+                entregue: 'Não',
+                observacoes
+            };
+    
+            adicionarPedidoNaTabela(pedido);
+            salvarPedido(pedido);
+    
+            document.getElementById('pedidoForm').reset();
+        });
+    
+        function adicionarPedidoNaTabela(pedido) {
+            const tabelaPedidos = document.getElementById('tabelaPedidos').getElementsByTagName('tbody')[0];
+            const novaLinha = tabelaPedidos.insertRow();
+    
+            const celulaBloco = novaLinha.insertCell(0);
+            const celulaApt = novaLinha.insertCell(1);
+            const celulaQnt = novaLinha.insertCell(2);
+            const celulaObservacoes = novaLinha.insertCell(3);
+            const celulaPagamento = novaLinha.insertCell(4);
+            const celulaEntrega = novaLinha.insertCell(5);
+            const celulaAcao = novaLinha.insertCell(6);
+    
+            celulaBloco.textContent = pedido.bloco;
+            celulaApt.textContent = pedido.apt;
+            celulaQnt.textContent = pedido.quantidade;
+            celulaObservacoes.textContent = pedido.observacoes;
+            celulaPagamento.innerHTML = `<button class="toggle nao" onclick="mudarStatus(this)">Não</button>`;
+            celulaEntrega.innerHTML = `<button class="toggle nao" onclick="mudarStatus(this)">Não</button>`;
+            celulaAcao.innerHTML = `<button class="excluir" onclick="excluirPedido(this)">Excluir</button>`;
+    
+            ordenarTabela();
+        }
+    
+        function mudarStatus(botao) {
+            botao.textContent = botao.textContent === 'Sim' ? 'Não' : 'Sim';
+            botao.className = botao.textContent === 'Sim' ? 'toggle sim' : 'toggle nao';
+            salvarAlteracoes();
+        }
+    
+        function excluirPedido(botao) {
+            const linha = botao.parentElement.parentElement;
+            const bloco = linha.cells[0].textContent;
+            const apt = linha.cells[1].textContent;
+            const quantidade = linha.cells[2].textContent;
+            const observacoes = linha.cells[3].textContent;
+    
+            if (confirm(`Você tem certeza que deseja excluir o pedido do bloco ${bloco}, apartamento ${apt}?`)) {
+                linha.remove();
+                salvarAlteracoes();
+            }
+        }
+    
+        function salvarPedido(pedido) {
+            const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+            pedidos.push(pedido);
+            localStorage.setItem('pedidos', JSON.stringify(pedidos));
+        }
+    
+        function carregarPedidos() {
+            const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+            pedidos.forEach(pedido => adicionarPedidoNaTabela(pedido));
+        }
+    
+        function salvarAlteracoes() {
+            const tabela = document.getElementById('tabelaPedidos');
+            const pedidos = [];
+            for (let i = 1; i < tabela.rows.length; i++) {
+                const linha = tabela.rows[i];
+                const pedido = {
+                    bloco: linha.cells[0].textContent,
+                    apt: linha.cells[1].textContent,
+                    quantidade: linha.cells[2].textContent,
+                    observacoes: linha.cells[3].textContent,
+                    pago: linha.cells[4].getElementsByClassName('toggle')[0].textContent,
+                    entregue: linha.cells[5].getElementsByClassName('toggle')[0].textContent
+                };
+                pedidos.push(pedido);
+            }
+            localStorage.setItem('pedidos', JSON.stringify(pedidos));
+        }
+    
+        function ordenarTabela() {
+            const tabela = document.getElementById('tabelaPedidos');
+            const rows = Array.from(tabela.querySelectorAll('tbody tr'));
+    
+            rows.sort((a, b) => {
+                const blocoA = a.cells[0].textContent;
+                const blocoB = b.cells[0].textContent;
+                const aptA = parseInt(a.cells[1].textContent);
+                const aptB = parseInt(b.cells[1].textContent);
+    
+                // Ordena primeiro por bloco (alfabética) e depois por apartamento (decrescente)
+                if (blocoA < blocoB) return -1;
+                if (blocoA > blocoB) return 1;
+                return aptB - aptA; // Ordena apartamento do maior para o menor
+            });
+    
+            rows.forEach(row => tabela.querySelector('tbody').appendChild(row));
+        }
+    </script>
+    
+</body>
+</html>
